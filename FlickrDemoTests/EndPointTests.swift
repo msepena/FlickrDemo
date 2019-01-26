@@ -22,7 +22,7 @@ class EndPointTests: XCTestCase {
 
     func testSearchFunctionReturnURL() {
         let url = FlickrEndpoint.search(query:"kittens", page: 1).url!.absoluteString
-        let expectedUrl = "https://api.flickr.com/services/rest?api_key=3e7cc266ae2b0e0d78e279ce8e361736&method=flickr.photos.search&text=kittens&per_page=20&format=json&nojsoncallback=1&page=1";
+        let expectedUrl = "https://api.flickr.com/services/rest?api_key=3e7cc266ae2b0e0d78e279ce8e361736&method=flickr.photos.search&text=kittens&per_page=30&format=json&nojsoncallback=1&page=1";
         XCTAssert(url == expectedUrl, "Url's should be same")
         
     }
