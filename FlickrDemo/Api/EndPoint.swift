@@ -8,7 +8,7 @@
 
 import Foundation
 
-let API_KEY = "de24642a8668fb0318ec5b9cecfda18c"
+let API_KEY = "3e7cc266ae2b0e0d78e279ce8e361736"
 let Limit = 20
 
 enum HTTPCode: Int {
