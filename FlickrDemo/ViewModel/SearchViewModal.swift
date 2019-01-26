@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-let minimu_query_length = 3
 class SearchViewModal {
     private var opsQueue: TaskQueue!
     private var services: Services!
@@ -35,10 +34,10 @@ class SearchViewModal {
     var query: String = "" {
         willSet {
             // compare the old value with new value and call ws
-            if newValue.count >= minimu_query_length && newValue != query {
+            if newValue != query {
                 self.opsQueue.execute { [weak self] in
                     self?.reset()
-                    self?.updateUI()
+                    self?.searchView?.update(state: State.progress)
                     self?.prefetchData(for: [IndexPath(row: 0, section: 0)], searchTerm: newValue)
                 }
             }
@@ -51,14 +50,9 @@ class SearchViewModal {
         self.pages.removeAll()
         self.count = 0
         self.photoLookup.removeAll()
-    }
-    
-    // start the progress
-    private func updateUI() {
-        DispatchQueue.main.async {
-            self.searchView?.update(state: .progress)
-            self.searchView?.reloadData()
-        }
+        self.searchView?.reloadData()
+        
+        
     }
 }
 

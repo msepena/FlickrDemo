@@ -12,6 +12,7 @@ class SearchViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var loadingView: UIActivityIndicatorView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     lazy var viewModal: SearchViewModal = SearchViewModal()
     lazy var dataSource: SearchDataSource = SearchDataSource(viewModal)
@@ -25,6 +26,7 @@ class SearchViewController: UIViewController {
         self.collectionView.prefetchDataSource = self.dataSource
         // Do any additional setup after loading the view.
         self.collectionView.setCollectionViewLayout(PhotoLayout(), animated: true)
+        self.searchBar.becomeFirstResponder()
     }
 
 
@@ -46,6 +48,10 @@ extension SearchViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
         self.viewModal.query = searchBar.text ?? ""
     }
+    
+    public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
 }
 
 extension SearchViewController: SearchView {
@@ -62,7 +68,9 @@ extension SearchViewController: SearchView {
     
     // reload the collectionview
     func reloadData() {
-        self.collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     
     func reloadItems(at indexPaths: [IndexPath]) {
@@ -71,10 +79,12 @@ extension SearchViewController: SearchView {
     
     // progress
     func update(state: State) {
-        if state ==  .progress{
-            self.loadingView.startAnimating()
-        } else {
-            self.loadingView.stopAnimating()
+        DispatchQueue.main.async {
+            if state ==  .progress{
+                self.loadingView.startAnimating()
+            } else {
+                self.loadingView.stopAnimating()
+            }
         }
     }
 }
