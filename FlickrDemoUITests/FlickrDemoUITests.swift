@@ -29,7 +29,6 @@ class FlickrDemoUITests: XCTestCase {
     func testExample() {
         // Use recording to get started writing UI tests.
         
-        
     }
 
 }
